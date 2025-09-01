@@ -6,7 +6,8 @@ from operator_funcs import reshape_data, apply_pacmap, format_results
 
 # Create Tercen context
 #http://127.0.0.1:5400/thiago.monteiro/w/e46272a348d3feaa384a4a9d8407773f/ds/384afa63-6ebc-4c6b-95a9-bff66bafb046
-tercenCtx = ctx.TercenContext(  workflowId="e46272a348d3feaa384a4a9d8407773f", stepId="384afa63-6ebc-4c6b-95a9-bff66bafb046" )
+# tercenCtx = ctx.TercenContext(  workflowId="e46272a348d3feaa384a4a9d8407773f", stepId="384afa63-6ebc-4c6b-95a9-bff66bafb046" )
+tercenCtx = ctx.TercenContext(  )
 
 # Get operator properties
 # Issue #1 --> Missed the value type
