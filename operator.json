@@ -1,36 +1,34 @@
 {
-    "name": "Template Python operator",
-    "description": "Mean operator implemented in Python",
-    "tags": ["template"],
+    "name": "PaCMAP operator",
+    "description": "Performs PaCMAP dimensionality reduction on image data",
+    "tags": ["dimensionality reduction", "machine learning", "visualization"],
     "authors": ["tercen"],
-    "urls": ["https://github.com/tercen/template-python-operator"],
-    "container":"ghcr.io/tercen/template-python-operator:latest",
+    "urls": ["https://github.com/tercen/pacmap_operator"],
+    "container":"ghcr.io/tercen/pacmap_operator:main",
     "properties": [
         {
             "kind": "DoubleProperty",
-            "name": "Property1",
-            "defaultValue": 42.0,
-            "description": "Example Double Property"
+            "name": "n_components",
+            "defaultValue": 2.0,
+            "description": "Number of dimensions in the embedding"
         },
         {
-            "kind": "StringProperty",
-            "name": "Property2",
-            "defaultValue": "42",
-            "description": "Example String Property"
+            "kind": "DoubleProperty",
+            "name": "n_neighbors",
+            "defaultValue": 10.0,
+            "description": "Number of neighbors for the kNN graph"
         },
         {
-            "kind": "BooleanProperty",
-            "name": "Property3",
-            "defaultValue": true,
-            "description": "Example Boolean Property"
+            "kind": "DoubleProperty",
+            "name": "MN_ratio",
+            "defaultValue": 0.5,
+            "description": "Ratio of mid-near pairs to be sampled"
         },
         {
-            "kind": "EnumeratedProperty",
-            "isSingleSelection":true,
-            "name": "Property4",
-            "defaultValue": "element2",
-            "values": ["element1", "element2", "element3"],
-            "description": "Example Enumerated Property"
+            "kind": "DoubleProperty",
+            "name": "FP_ratio",
+            "defaultValue": 2.0,
+            "description": "Ratio of further pairs to be sampled"
         }
     ]
 }

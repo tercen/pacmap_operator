@@ -1,61 +1,69 @@
+# PaCMAP Operator
 
-# Template Python Operator
+This operator performs PaCMAP (Pairwise Controlled Manifold Approximation) dimensionality reduction on image data in Tercen.
 
-Cell-wise mean calculated implemented in Python.
+## Overview
 
-## Python operator - Development workflow
+PaCMAP is a dimensionality reduction algorithm that preserves both local and global structure of the data. It is particularly useful for visualization and exploration of high-dimensional data. This operator takes image data in a long format and applies PaCMAP to reduce it to a lower-dimensional representation.
 
-* Set up [the Tercen Studio development environment](https://github.com/tercen/tercen_studio)
-* Create a new git repository based on the [template Python operator](https://github.com/tercen/template-python-operator)
-* Open VS Code Server by going to: http://127.0.0.1:8443
-* Clone this repository into VS Code (using the 'Clone from GitHub' command from the Command Palette for example)
-* Load the environment and install core requirements by running the following commands in the terminal:
+## Input Data
 
-```bash
-source /config/.pyenv/versions/3.9.0/bin/activate
-pip install -r requirements.txt
+The operator expects data in the following format:
+
+### Main Projection
+- `.y`: The pixel value
+- `.ci`: Column index linking to the Column Projection
+- `.ri`: Row index linking to the Row Projection
+
+### Column Projection
+- `eventId`: Unique identifier for each image/event
+- `.ci`: Column index linking to the Main Projection
+
+### Row Projection
+- `pixel_id`: Unique identifier for each pixel position
+- `.ri`: Row index linking to the Main Projection
+
+Example of input data:
+
+**Main Projection**
+```
+.ci .ri .y  
+0   0  1.3  
+1   0  0.1 
+0   1  0.5 
+1   1  0.8 
 ```
 
-* Develop your operator. Note that you can interact with an existing data step by specifying arguments to the `TercenContext` function:
-
-```python
-tercenCtx = ctx.TercenContext()
+**Row Projection**
+```
+.ri pixel_id
+0  1
+1  2
 ```
 
-```python
-tercenCtx = ctx.TercenContext(
-    workflowId="YOUR_WORKFLOW_ID",
-    stepId="YOUR_STEP_ID",
-    username="admin", # if using the local Tercen instance
-    password="admin", # if using the local Tercen instance
-    serviceUri = "http://tercen:5400/" # if using the local Tercen instance 
-)
+**Column Projection**
+```
+.ci eventId
+0  1
+1  2
 ```
 
-* Generate requirements
+## Output Data
 
-```bash
-python3 -m tercen.util.requirements . > requirements.txt
-```
+The operator outputs a data frame with the following columns:
+- `PaCMAP_1`, `PaCMAP_2`, ...: The coordinates in the reduced dimensionality space
+- `eventId`: The original event identifier
+- `.ci`: Column index
+- `.ri`: Row index (set to 0)
 
-* Push your changes to GitHub: triggers CI GH workflow
-* Tag the repository: triggers Release GH workflow
-* Go to tercen and install your operator
+## Parameters
 
+- `n_components` (default: 2): Number of dimensions in the embedding
+- `n_neighbors` (default: 10): Number of neighbors for the kNN graph
+- `MN_ratio` (default: 0.5): Ratio of mid-near pairs to be sampled
+- `FP_ratio` (default: 2.0): Ratio of further pairs to be sampled
 
-## Helpful Commands
+## References
 
-### Install Tercen Python Client
-
-```bash
-python3 -m pip install --force git+https://github.com/tercen/tercen_python_client@0.7.1
-```
-
-### Wheel
-
-Though not strictly mandatory, many packages require it.
-
-```bash
-python3 -m pip install wheel
-```
-
+- [PaCMAP GitHub Repository](https://github.com/YingfanWang/PaCMAP)
+- Wang, Y., Huang, H., Rudin, C., & Shaposhnik, Y. (2021). Understanding How Dimension Reduction Tools Work: An Empirical Approach to Deciphering t-SNE, UMAP, TriMAP, and PaCMAP for Data Visualization. Journal of Machine Learning Research, 22(1), 3794-3841.
