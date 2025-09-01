@@ -17,7 +17,7 @@ MN_ratio = tercenCtx.operator_property("MN_ratio", default=0.5, typeFn=float)
 FP_ratio = tercenCtx.operator_property("FP_ratio", default=2.0, typeFn=float)
 
 # n_neighbors = int(10 + 15 * (math.log10(70000)-4))
-n_neighbors = int(5)
+# n_neighbors = int(5)
 
 # Get data from Tercen
 # Issue #2 --> .ci and .ri are added as indices
