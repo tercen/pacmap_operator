@@ -35,5 +35,5 @@ result_df = format_results(embedding, col_data)
 
 # Add namespace and save results
 result_df = tercenCtx.add_namespace(result_df)
-
+result_df = result_df.astype({'pacmap.PaCMAP_1': 'float', 'pacmap.PaCMAP_2': 'float'})
 tercenCtx.save(result_df)
